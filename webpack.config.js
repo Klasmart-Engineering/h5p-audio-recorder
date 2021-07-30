@@ -46,7 +46,7 @@ const config = {
       {
         test: /\.(svg)$/,
         include: path.join(__dirname, 'src/images'),
-        type: 'asset/resource'
+        type: 'asset/inline'
       }
     ]
   },
