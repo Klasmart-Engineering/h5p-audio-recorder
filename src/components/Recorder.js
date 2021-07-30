@@ -64,6 +64,10 @@ export default class Recorder extends H5P.EventDispatcher {
       numChannels: 1
     };
 
+    this.mediaRecorder = null;
+    this.mediaChunks = [];
+    this.mediaMIMEType = this.getRecordingMIMEType();
+
     this.state = RecorderState.inactive;
 
     // Create a worker. This is normally done using a URL to the js-file
@@ -182,6 +186,21 @@ export default class Recorder extends H5P.EventDispatcher {
       // Ask for access to the user's microphone
       this.userMedia = navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
 
+        // Provide audio for export
+        if (this.mediaMIMEType) {
+          this.mediaRecorder = new MediaRecorder(stream);
+
+          this.mediaRecorder.onstop = () => {
+            const blob = new Blob(this.mediaChunks, { type: this.mediaMIMEType });
+            this.mediaChunks = [];
+            this.triggerFileExport({ type: this.mediaMIMEType, blob: blob });
+          }
+
+          this.mediaRecorder.ondataavailable = (event) => {
+            this.mediaChunks.push(event.data);
+          }
+        }
+
         this._setupAudioProcessing(stream);
 
         // Initialize the worker
@@ -211,6 +230,13 @@ export default class Recorder extends H5P.EventDispatcher {
   start() {
     this.grabMic()
       .then(() => {
+        if (this.mediaRecorder && this.mediaRecorder.state === 'paused') {
+          this.mediaRecorder.resume();
+        }
+        else if (this.mediaRecorder && this.mediaRecorder.state === 'inactive') {
+          this.mediaRecorder.start();
+        }
+
         this._setState(RecorderState.recording);
       })
       .catch(e => {
@@ -219,9 +245,29 @@ export default class Recorder extends H5P.EventDispatcher {
   }
 
   /**
-   * Stop/pause a recording
+   * Pause recording.
+   */
+  pause() {
+    if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+      this.mediaRecorder.pause();
+    }
+
+    this._setState(RecorderState.inactive);
+  }
+
+  /**
+   * Stop recording.
    */
   stop() {
+    if (this.mediaRecorder) {
+      if (this.mediaRecorder.state !== 'inactive') {
+        this.mediaRecorder.stop();
+      }
+    }
+    else {
+      this.triggerFileExport(null);
+    }
+
     this._setState(RecorderState.inactive);
   }
 
@@ -233,6 +279,44 @@ export default class Recorder extends H5P.EventDispatcher {
     return (window.AudioContext !== undefined || window.webkitAudioContext !== undefined)
       && navigator.mediaDevices
       && navigator.mediaDevices.getUserMedia;
+  }
+
+  /**
+   * Trigger file export.
+   * @param {object} data Any data to be exported.
+   */
+  triggerFileExport(data) {
+    this.trigger(
+      'exportFile',
+      data,
+      { external: true }
+    );
+  }
+
+  /**
+   * Get MIME type for recording.
+   * @return {string|null} MIME type or null.
+   */
+  getRecordingMIMEType() {
+    if (!window.MediaRecorder) {
+      return null;
+    }
+
+    if (!window.MediaRecorder.isTypeSupported) {
+      // Best guess: older Apple device not yet supporting that function but recording in general
+      return 'audio/mp4';
+    }
+
+    if (window.MediaRecorder.isTypeSupported('audio/webm')) {
+      return 'audio/webm';
+    }
+
+    if (window.MediaRecorder.isTypeSupported('audio/mp4')) {
+      // Exception for Apple devices that only record mp4
+      return 'audio/mp4';
+    }
+
+    return null;
   }
 
   /**

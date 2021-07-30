@@ -96,7 +96,7 @@ export default class {
     });
 
     viewModel.$on('paused', () => {
-      recorder.stop();
+      recorder.pause();
     });
 
     // Update UI when on recording events
