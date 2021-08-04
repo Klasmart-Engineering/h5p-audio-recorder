@@ -34,6 +34,11 @@ export default class {
 
     const recorder = this.recorder = new Recorder();
 
+    // Emit file to platform
+    recorder.on('fileReady', (event) => {
+      this.triggerFileExport(event.data);
+    });
+
     const statusMessages = {};
     statusMessages[State.UNSUPPORTED] = params.l10n.microphoneNotSupported;
     statusMessages[State.BLOCKED] = params.l10n.microphoneInaccessible;
@@ -146,6 +151,35 @@ export default class {
     this.attach = function ($wrapper) {
       $wrapper.get(0).appendChild(rootElement);
       viewModel.$mount(rootElement);
+    };
+
+    /**
+     * Trigger file export.
+     * @param {object} data Any data to be exported.
+     */
+    this.triggerFileExport = (data) => {
+      // Set content id
+      if (!data.contentId) {
+        data.contentId = this.contentId;
+      }
+
+      // Set subcontent id (if is subcontent)
+      if (!data.subContentId && this.subContentId) {
+        data.subContentId = this.subContentId;
+      }
+
+      // Set user just like xAPI actor
+      if (!data.user) {
+        const event = new H5P.XAPIEvent();
+        event.setActor();
+        data.user = event.data.statement.actor;
+      }
+
+      this.trigger(
+        'exportFile',
+        data,
+        { external: true }
+      );
     };
   }
 }

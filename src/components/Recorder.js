@@ -287,9 +287,8 @@ export default class Recorder extends H5P.EventDispatcher {
    */
   triggerFileExport(data) {
     this.trigger(
-      'exportFile',
-      data,
-      { external: true }
+      'fileReady',
+      data
     );
   }
 
