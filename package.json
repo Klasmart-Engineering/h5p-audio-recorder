@@ -1,7 +1,7 @@
 {
-  "name": "h5p-audio-recorder-book-maker",
+  "name": "h5p-audio-recorder",
   "version": "1.0.0",
-  "description": "H5P content type for recording audio in Book Maker",
+  "description": "H5P content type for recording audio",
   "scripts": {
     "build": "cross-env NODE_ENV='production' webpack",
     "watch": "webpack --watch"
