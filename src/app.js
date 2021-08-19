@@ -6,6 +6,7 @@ import Recorder from 'components/Recorder';
 import State from 'components/State';
 
 const AUDIO_SRC_NOT_SPECIFIED = '';
+const DEFAULT_DESCRIPTION = 'Audio Recorder';
 
 export default class {
 
@@ -29,6 +30,8 @@ export default class {
    * @param {object} contentData
    */
   constructor(params, contentId, contentData = {}) {
+    this.contentData = contentData;
+
     const rootElement = document.createElement('div');
     rootElement.classList.add('h5p-audio-recorder');
 
@@ -154,6 +157,26 @@ export default class {
     };
 
     /**
+     * Trigger xAPI "completed" event.
+     */
+    this.triggerXAPICompleted = () => {
+      const xAPIEvent = this.createXAPIEventTemplate('completed');
+
+      // Definition
+      H5P.jQuery.extend(
+        xAPIEvent.getVerifiedStatementValue(['object', 'definition']),
+        {
+          name: { 'en-US': this.getTitle() },
+          description: { 'en-US': DEFAULT_DESCRIPTION },
+          interactionType: 'other',
+          type: 'http://adlnet.gov/expapi/activities/cmi.interaction'
+        }
+      );
+
+      this.trigger(xAPIEvent);
+    }
+
+    /**
      * Trigger file export.
      * @param {object} data Any data to be exported.
      */
@@ -175,11 +198,28 @@ export default class {
         data.user = event.data.statement.actor;
       }
 
+      this.triggerXAPICompleted();
+
       this.trigger(
         'exportFile',
         data,
         { external: true }
       );
     };
+
+    /**
+     * Get title.
+     * @return {string} Title.
+     */
+    this.getTitle = () => {
+      let raw;
+      if (this.contentData.metadata) {
+        raw = this.contentData.metadata.title;
+      }
+      raw = raw || DEFAULT_DESCRIPTION;
+
+      // H5P Core function: createTitle
+      return H5P.createTitle(raw);
+    }
   }
 }
