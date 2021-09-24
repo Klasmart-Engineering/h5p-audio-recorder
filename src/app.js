@@ -199,6 +199,8 @@ export default class {
         data.user = event.data.statement.actor;
       }
 
+      data.description = data.description = this.getTitle();
+
       this.triggerXAPICompleted();
 
       this.trigger(
