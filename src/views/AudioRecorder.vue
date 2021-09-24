@@ -117,12 +117,17 @@
         );
         dialog.appendTo(this.$el);
         dialog.show();
+        this.$emit('confirmation-dialog-opened', dialog.getElement());
         dialog.on('confirmed', () => {
           this.state = State.READY;
           if(this.$refs.timer) {
             this.$refs.timer.reset();
           }
           this.$emit('retry');
+          this.$emit('confirmation-dialog-closed');
+        });
+        dialog.on('canceled', () => {
+          this.$emit('confirmation-dialog-closed');
         });
       }
     },
@@ -363,6 +368,21 @@
         &.pause {
           min-width: $record-button-width;
         }
+      }
+    }
+
+    .h5p-confirmation-dialog-popup {
+      overflow: clip auto;
+    }
+
+    .h5p-confirmation-dialog-popup.narrow-view {
+      height: 100%;
+      justify-content: unset;
+      top: 0;
+      width: 100%;
+
+      .h5p-confirmation-dialog-body {
+        flex-grow: 1;
       }
     }
   }
