@@ -30,6 +30,7 @@ export default class {
    * @param {object} contentData
    */
   constructor(params, contentId, contentData = {}) {
+    this.params = params;
     this.contentData = contentData;
 
     const rootElement = document.createElement('div');
@@ -167,7 +168,7 @@ export default class {
         xAPIEvent.getVerifiedStatementValue(['object', 'definition']),
         {
           name: { 'en-US': this.getTitle() },
-          description: { 'en-US': DEFAULT_DESCRIPTION },
+          description: { 'en-US': this.getDescription() },
           interactionType: 'other',
           type: 'http://adlnet.gov/expapi/activities/cmi.interaction'
         }
@@ -220,6 +221,18 @@ export default class {
 
       // H5P Core function: createTitle
       return H5P.createTitle(raw);
+    }
+
+    /**
+     * Get description.
+     * @return {string} Description.
+     */
+    this.getDescription = () => {
+      if (this.params && this.params.title && this.params.title !== '') {
+        return this.params.title;
+      }
+
+      return DEFAULT_DESCRIPTION;
     }
   }
 }
