@@ -73,9 +73,9 @@ export default class {
 
     this.on('resize', () => {
       // Assuming that height > 200 and width > 480 are enough to display full dialog
-      const presumablyEnoughSpace = this.contentDOM.offsetHeight > 200 && this.contentDOM.offsetWidth > 480;
+      const presumablyEnoughSpace = this.contentBody.offsetHeight > 200 && this.contentBody.offsetWidth > 480;
 
-      if (!this.isNarrowView && !presumablyEnoughSpace && this.confirmationDialog && this.confirmationDialog.offsetTop + this.confirmationDialog.offsetHeight > this.contentDOM.offsetHeight) {
+      if (!this.isNarrowView && !presumablyEnoughSpace && this.confirmationDialog && this.confirmationDialog.offsetTop + this.confirmationDialog.offsetHeight > this.contentBody.offsetHeight) {
         this.setNarrowView(true);
       }
       else if (this.isNarrowView && presumablyEnoughSpace) {
@@ -161,11 +161,13 @@ export default class {
       if (state) {
         this.confirmationDialog.classList.add('narrow-view');
         this.confirmationDialog.style.top = 0;
+        this.contentBody.style.overflow = 'hidden';
         this.isNarrowView = true;
       }
       else {
         this.isNarrowView = false;
         this.confirmationDialog.classList.remove('narrow-view');
+        this.contentBody.style.overflow = '';
         this.confirmationDialog.style.top = '40px'; // Default value set in H5P core
       }
     };
@@ -200,7 +202,7 @@ export default class {
       $wrapper.get(0).appendChild(rootElement);
       viewModel.$mount(rootElement);
 
-      this.contentDOM = $wrapper.get(0);
+      this.contentBody = $wrapper.parents('body').get(0);
     };
 
     /**
