@@ -72,6 +72,12 @@ export default class {
     });
 
     this.on('resize', () => {
+      const view = document.querySelector('.h5p-audio-recorder-view');
+
+      if (!this.contentBody) {
+        this.contentBody = H5P.jQuery(view).parents('body').get(0);
+      }
+
       // Assuming that height > 200 and width > 480 are enough to display full dialog
       const presumablyEnoughSpace = this.contentBody.offsetHeight > 200 && this.contentBody.offsetWidth > 480;
 
@@ -201,8 +207,6 @@ export default class {
     this.attach = function ($wrapper) {
       $wrapper.get(0).appendChild(rootElement);
       viewModel.$mount(rootElement);
-
-      this.contentBody = $wrapper.parents('body').get(0);
     };
 
     /**
