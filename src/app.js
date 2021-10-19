@@ -72,6 +72,24 @@ export default class {
       }
     });
 
+    this.on('resize', () => {
+      const view = document.querySelector('.h5p-audio-recorder-view');
+
+      if (!this.contentBody) {
+        this.contentBody = H5P.jQuery(view).parents('body').get(0);
+      }
+
+      // Assuming that height > 200 and width > 480 are enough to display full dialog
+      const presumablyEnoughSpace = this.contentBody.offsetHeight > 200 && this.contentBody.offsetWidth > 480;
+
+      if (!this.isNarrowView && !presumablyEnoughSpace && this.confirmationDialog && this.confirmationDialog.offsetTop + this.confirmationDialog.offsetHeight > this.contentBody.offsetHeight) {
+        this.setNarrowView(true);
+      }
+      else if (this.isNarrowView && presumablyEnoughSpace) {
+        this.setNarrowView(false);
+      }
+    });
+
     // resize iframe on state change
     viewModel.$watch('state', () => this.trigger('resize'));
 
@@ -125,6 +143,41 @@ export default class {
     recorder.on('insecure-not-allowed', () => {
       viewModel.state = State.INSECURE_NOT_ALLOWED;
     });
+
+    // Retry confirmation dialog opened
+    viewModel.$on('confirmation-dialog-opened', (dialog) => {
+      this.confirmationDialog = dialog;
+      this.trigger('resize');
+    });
+
+    // Retry confirmation dialog closed
+    viewModel.$on('confirmation-dialog-closed', () => {
+      this.setNarrowView(false);
+      this.confirmationDialog = null;
+    });
+
+    /**
+     * Set narrow view.
+     * @param {boolean} state If true, set view, if false, remove view.
+     */
+    this.setNarrowView = (state) => {
+      if (typeof state !== 'boolean' || !this.confirmationDialog) {
+        return;
+      }
+
+      if (state) {
+        this.confirmationDialog.classList.add('narrow-view');
+        this.confirmationDialog.style.top = 0;
+        this.contentBody.style.overflow = 'hidden';
+        this.isNarrowView = true;
+      }
+      else {
+        this.isNarrowView = false;
+        this.confirmationDialog.classList.remove('narrow-view');
+        this.contentBody.style.overflow = '';
+        this.confirmationDialog.style.top = '40px'; // Default value set in H5P core
+      }
+    };
 
     /**
      * Initialize microphone frequency update loop. Will run until no longer recording.
