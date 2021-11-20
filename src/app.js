@@ -105,12 +105,12 @@ export default class {
         viewModel.audioSrc = url;
 
         // Create a filename using the title
-        if(params.title && params.title.length > 0) {
+        if (params.title && params.title.length > 0) {
           const filename = params.title.substr(0, 20);
           viewModel.audioFilename = filename.toLowerCase().replace(/ /g, '-') + '.wav';
         }
 
-        this.trigger('resize')
+        this.trigger('resize');
       }).catch(e => {
         viewModel.state = State.CANT_CREATE_AUDIO_FILE;
         console.error(params.l10n.statusCantCreateTheAudioFile, e);
@@ -197,7 +197,7 @@ export default class {
         this.animateVUMeter = window.requestAnimationFrame(() => {
           this.updateMicFrequency();
         });
-      }, 10)
+      }, 10);
     };
 
     /**
@@ -228,7 +228,7 @@ export default class {
       );
 
       this.trigger(xAPIEvent);
-    }
+    };
 
     /**
      * Trigger file export.
@@ -276,7 +276,7 @@ export default class {
 
       // H5P Core function: createTitle
       return H5P.createTitle(raw);
-    }
+    };
 
     /**
      * Get description.
@@ -288,6 +288,6 @@ export default class {
       }
 
       return DEFAULT_DESCRIPTION;
-    }
+    };
   }
 }

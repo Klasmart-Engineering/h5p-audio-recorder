@@ -194,11 +194,11 @@ export default class Recorder extends H5P.EventDispatcher {
             const blob = new Blob(this.mediaChunks, { type: this.mediaMIMEType });
             this.mediaChunks = [];
             this.triggerFileExport({ type: this.mediaMIMEType, blob: blob });
-          }
+          };
 
           this.mediaRecorder.ondataavailable = (event) => {
             this.mediaChunks.push(event.data);
-          }
+          };
         }
 
         this._setupAudioProcessing(stream);
