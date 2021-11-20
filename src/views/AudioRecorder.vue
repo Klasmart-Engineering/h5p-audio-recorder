@@ -162,10 +162,14 @@
   }
 
   .h5p-audio-recorder-view {
-    font-size: 1em;
+    font-size: .85em;
     padding: 0.9em;
     text-align: center;
     font-family: Arial, 'Open Sans', sans-serif;
+
+    .title {
+      font-size: 1em;
+    }
 
     [class^="fa-"] {
       font-family: 'H5PFontAwesome4';
@@ -178,7 +182,7 @@
       top: 50%;
       transform: translate(-50%,-50%);
       position: absolute;
-      font-size: 2.5em;
+      font-size: 1.15em;
       border-radius: 50%;
       background-color: white;
       line-height: 2.5em;
@@ -237,8 +241,8 @@
     }
 
     .h5p-audio-recorder-download {
-      font-size: 1.2em;
-      padding: 2em;
+      font-size: .85em;
+      padding: 1em .5em;
     }
 
     .h5p-confirmation-dialog-popup {
@@ -319,16 +323,17 @@
     }
 
     .button {
-      font-size: 1.042em;
+      font-size: 0.85em;
       font-family: 'Open Sans', sans-serif;
-      padding: 0.708em 1.250em;
+      line-height: 1.2em;
+      padding: .5em 1.25em;
       border-radius: 2em;
       margin: 0 0.5em;
       border: 0;
       display: inline-block;
       cursor: pointer;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 400;
       white-space: nowrap;
 
       [class^="fa-"] {
