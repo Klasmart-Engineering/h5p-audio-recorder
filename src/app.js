@@ -4,6 +4,7 @@ import VUMeter from './views/VUMeter.vue';
 import Timer from './views/Timer.vue';
 import Recorder from 'components/Recorder';
 import State from 'components/State';
+import Util from 'components/Util';
 
 const AUDIO_SRC_NOT_SPECIFIED = '';
 const DEFAULT_DESCRIPTION = 'Audio Recorder';
@@ -30,7 +31,30 @@ export default class {
    * @param {object} contentData
    */
   constructor(params, contentId, contentData = {}) {
-    this.params = params;
+    this.params = Util.extend({
+      l10n: {
+        recordAnswer: 'Record',
+        pause: 'Pause',
+        continue: 'Continue',
+        download: 'Download',
+        done: 'Done',
+        retry: 'Retry',
+        microphoneNotSupported: 'Microphone not supported. Make sure you are using a browser that allows microphone recording.',
+        microphoneInaccessible: 'Microphone is not accessible. Make sure that the browser microphone is enabled.',
+        insecureNotAllowed: 'Access to microphone is not allowed in your browser since this page is not served using HTTPS. Please contact the author, and ask him to make this available using HTTPS',
+        statusReadyToRecord: 'Press a button below to record your answer.',
+        statusRecording: 'Recording...',
+        statusPaused: 'Recording paused. Press a button to continue recording.',
+        statusFinishedRecording: 'You have successfully recorded your answer! Listen to the recording below.',
+        downloadRecording: 'Download this recording or retry.',
+        retryDialogHeaderText: 'Retry recording?',
+        retryDialogBodyText: 'By pressing "Retry" you will lose your current recording.',
+        retryDialogConfirmText: 'Retry',
+        retryDialogCancelText: 'Cancel',
+        statusCantCreateTheAudioFile: 'Can\'t create the audio file.'
+      }
+    }, params);
+
     this.contentData = contentData;
 
     const rootElement = document.createElement('div');
@@ -44,23 +68,29 @@ export default class {
     });
 
     const statusMessages = {};
-    statusMessages[State.UNSUPPORTED] = params.l10n.microphoneNotSupported;
-    statusMessages[State.BLOCKED] = params.l10n.microphoneInaccessible;
-    statusMessages[State.READY] = params.l10n.statusReadyToRecord;
-    statusMessages[State.RECORDING] = params.l10n.statusRecording;
-    statusMessages[State.PAUSED] = params.l10n.statusPaused;
-    statusMessages[State.DONE] = params.l10n.statusFinishedRecording;
-    statusMessages[State.INSECURE_NOT_ALLOWED] = params.l10n.insecureNotAllowed;
-    statusMessages[State.CANT_CREATE_AUDIO_FILE] = params.l10n.statusCantCreateTheAudioFile;
+    statusMessages[State.UNSUPPORTED] = this.params.l10n.microphoneNotSupported;
+    statusMessages[State.BLOCKED] = this.params.l10n.microphoneInaccessible;
+    statusMessages[State.READY] = this.params.l10n.statusReadyToRecord;
+    statusMessages[State.RECORDING] = this.params.l10n.statusRecording;
+    statusMessages[State.PAUSED] = this.params.l10n.statusPaused;
+    statusMessages[State.DONE] = this.params.l10n.statusFinishedRecording;
+    statusMessages[State.INSECURE_NOT_ALLOWED] = this.params.l10n.insecureNotAllowed;
+    statusMessages[State.CANT_CREATE_AUDIO_FILE] = this.params.l10n.statusCantCreateTheAudioFile;
 
     AudioRecorderView.data = () => ({
-      title: params.title,
+      title: this.params.title,
       state: recorder.supported() ? State.READY : State.UNSUPPORTED,
       statusMessages,
-      l10n: params.l10n,
+      l10n: this.params.l10n,
       audioSrc: AUDIO_SRC_NOT_SPECIFIED,
       audioFilename: '',
-      avgMicFrequency: 0
+      avgMicFrequency: 0,
+      isSubcontent: !this.isRoot()
+    });
+
+    // Resize player view
+    this.on('resize', () => {
+      viewModel.resize();
     });
 
     // Create recording wrapper view
