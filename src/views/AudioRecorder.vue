@@ -165,7 +165,7 @@
     font-size: .85em;
     padding: 0.9em;
     text-align: center;
-    font-family: Arial, 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 
     .title {
       font-size: 1em;
@@ -324,7 +324,7 @@
 
     .button {
       font-size: 0.85em;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Roboto', sans-serif;
       line-height: 1.2em;
       padding: .5em 1.25em;
       border-radius: 2em;

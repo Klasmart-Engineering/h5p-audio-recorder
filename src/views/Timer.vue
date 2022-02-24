@@ -48,7 +48,7 @@
 
 <style lang="scss" type="text/scss">
   .audio-recorder-timer {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.5em;
     font-weight: 600;
     color: #8f8f8f;
