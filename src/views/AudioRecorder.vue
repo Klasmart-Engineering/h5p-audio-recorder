@@ -13,7 +13,7 @@
       </audio>
     </div>
 
-    <timer ref="timer" v-bind:stopped="state !== 'recording'" v-if="state !== 'unsupported' && state !== 'done' && state !== 'insecure-not-allowed'"></timer>
+    <timer ref="timer" v-bind:stopped="state !== 'recording'" v-if="state !== 'unsupported' && state !== 'done' && state !== 'insecure-not-allowed' && state !== 'resume'"></timer>
 
     <div v-if="state !== 'blocked' && state !== 'unsupported' && state === 'done'" class="h5p-audio-recorder-download">
       {{ l10n.downloadRecording }}
@@ -30,7 +30,7 @@
         </button>
 
         <button class="button retry small"
-                v-if="state === 'recording' || state === 'paused'"
+                v-if="state === 'recording' || state === 'paused' || state === 'resume'"
                 v-on:click="retry">
           <span class="fa-undo"></span>
           <span class="label">{{ l10n.retry }}</span>
@@ -114,6 +114,11 @@
       done: function() {
         this.state = State.DONE;
         this.$emit(State.DONE);
+      },
+
+      resume: function() {
+        this.state = State.RESUME;
+        this.$emit(State.RESUME);
       },
 
       retry: function() {
@@ -255,6 +260,10 @@
       &.done {
         background-color: #e0f9e3;
         color:  #20603d;
+      }
+
+      &.resume {
+        margin-bottom: 1em;
       }
 
       &.blocked,

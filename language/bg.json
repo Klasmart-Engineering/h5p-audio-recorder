@@ -83,6 +83,10 @@
         {
           "label": "Съобщение за състояние - Аудио файлът не може да бъде създаден",
           "default": "Аудио файлът не може да бъде създаден."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

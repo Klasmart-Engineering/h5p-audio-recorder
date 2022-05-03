@@ -83,6 +83,10 @@
         {
           "label": "오디오 파일 상태 메시지를 생성할 수 없습니다",
           "default": "오디오 파일을 생성할 수 없습니다."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

@@ -83,6 +83,10 @@
         {
           "label": "Message d'erreur à la création de l'enregistrement",
           "default": "Impossible de créer le fichier audio."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

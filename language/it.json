@@ -83,6 +83,10 @@
         {
           "label": "Impossibile creare il messaggio di stato per il file audio",
           "default": "Impossibile creare il file audio"
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

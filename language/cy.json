@@ -83,6 +83,10 @@
         {
           "label": "Neges statws methu â chreu ffeil sain",
           "default": "Methu â chreu'r ffeil sain."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

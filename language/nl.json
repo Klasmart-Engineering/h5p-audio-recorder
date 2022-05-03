@@ -83,6 +83,10 @@
         {
           "label": "Statusbericht - kan geen audio bestand maken",
           "default": "Kan het audiobestand niet maken."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

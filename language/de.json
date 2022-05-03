@@ -83,6 +83,10 @@
         {
           "label": "Statusmeldung, dass die Tondatei nicht erstellt werden kann",
           "default": "Tondatei kann nicht erzeugt werden."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

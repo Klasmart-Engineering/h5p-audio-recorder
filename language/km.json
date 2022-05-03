@@ -83,6 +83,10 @@
         {
           "label": "Can't create audio file status message",
           "default": "មិនអាចបង្កើតឯកសារសម្លេង"
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

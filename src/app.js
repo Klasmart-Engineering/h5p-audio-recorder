@@ -51,11 +51,16 @@ export default class {
         retryDialogBodyText: 'By pressing "Retry" you will lose your current recording.',
         retryDialogConfirmText: 'Retry',
         retryDialogCancelText: 'Cancel',
-        statusCantCreateTheAudioFile: 'Can\'t create the audio file.'
+        statusCantCreateTheAudioFile: 'Can\'t create the audio file.',
+        statusResume: 'Your recording has already been uploaded.',
       }
     }, params);
 
     this.contentData = contentData;
+
+    this.viewState = this.contentData && this.contentData.previousState && this.contentData.previousState.viewState ?
+      this.contentData.previousState.viewState :
+      State.READY;
 
     const rootElement = document.createElement('div');
     rootElement.classList.add('h5p-audio-recorder');
@@ -76,6 +81,7 @@ export default class {
     statusMessages[State.DONE] = this.params.l10n.statusFinishedRecording;
     statusMessages[State.INSECURE_NOT_ALLOWED] = this.params.l10n.insecureNotAllowed;
     statusMessages[State.CANT_CREATE_AUDIO_FILE] = this.params.l10n.statusCantCreateTheAudioFile;
+    statusMessages[State.RESUME] = this.params.l10n.statusResume;
 
     AudioRecorderView.data = () => ({
       title: this.params.title,
@@ -121,7 +127,11 @@ export default class {
     });
 
     // resize iframe on state change
-    viewModel.$watch('state', () => this.trigger('resize'));
+    viewModel.$watch('state', (state) => {
+      this.viewState = state;
+      this.trigger('kllStoreSessionState', undefined, { bubbles: true, external: true });
+      this.trigger('resize');
+    });
 
     // Start recording when record button is pressed
     viewModel.$on('recording', () => {
@@ -185,6 +195,10 @@ export default class {
       this.setNarrowView(false);
       this.confirmationDialog = null;
     });
+
+    if (this.viewState === State.DONE || this.viewState === State.RESUME) {
+      viewModel.resume();
+    }
 
     /**
      * Set narrow view.
@@ -318,6 +332,15 @@ export default class {
       }
 
       return DEFAULT_DESCRIPTION;
+    };
+
+    /**
+     * Get current state.
+     */
+    this.getCurrentState = () => {
+      return {
+        viewState: this.viewState
+      };
     };
   }
 }

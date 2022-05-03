@@ -83,6 +83,10 @@
         {
           "label": "錯誤訊息-無法創建檔案",
           "default": "無法建立錄音檔案，請再試一次。"
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

@@ -83,6 +83,10 @@
         {
           "label": "Statusmeddelandet kan inte skapa ljudfil",
           "default": "Det går inte att skapa ljudfilen."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

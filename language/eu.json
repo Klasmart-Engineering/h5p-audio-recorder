@@ -83,6 +83,10 @@
         {
           "label": "Ezin sortu audio fitxategia egoeraren mezua",
           "default": "Ezin da sortu audio fitxategirik."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

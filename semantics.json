@@ -128,6 +128,12 @@
         "label": "Can't create audio file status message",
         "type": "text",
         "default": "Can't create the audio file."
+      },
+      {
+        "name": "statusResume",
+        "label": "Your recording has already been uploaded.",
+        "type": "text",
+        "default": "Your recording has already been uploaded."
       }
     ]
   }

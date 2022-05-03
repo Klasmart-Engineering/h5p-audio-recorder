@@ -83,6 +83,10 @@
         {
           "label": "オーディオ ファイルのステータス メッセージを作成できません。",
           "default": "オーディオファイルを作成できません。"
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

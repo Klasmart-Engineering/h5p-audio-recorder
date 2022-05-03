@@ -83,6 +83,10 @@
         {
           "label": "Helifaili loomise tõrke oleku teade",
           "default": "Ei saa helifaili luua."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

@@ -83,6 +83,10 @@
         {
           "label": "No es pot crear el missatge d’estat del fitxer d’àudio",
           "default": "No es pot crear el fitxer d’àudio."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

@@ -83,6 +83,10 @@
         {
           "label": "Sporočilo ob napaki pri ustvarjanju zvočne datoteke",
           "default": "Zvočne datoteke ni mogoče ustvariti."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

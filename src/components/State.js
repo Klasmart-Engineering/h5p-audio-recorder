@@ -11,7 +11,8 @@ const State = {
   DONE: 'done',
   ERROR: 'error',
   INSECURE_NOT_ALLOWED: 'insecure-not-allowed',
-  CANT_CREATE_AUDIO_FILE: 'cant-create-audio-file'
+  CANT_CREATE_AUDIO_FILE: 'cant-create-audio-file',
+  RESUME: 'resume'
 };
 
 export default State;

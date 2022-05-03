@@ -83,6 +83,10 @@
         {
           "label": "Mensagem de satus de Arquivo de áudio não criado",
           "default": "Não foi possível criar o arquivo de áudio."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

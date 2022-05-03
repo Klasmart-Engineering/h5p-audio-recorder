@@ -83,6 +83,10 @@
         {
           "label": "Nelze vytvořit zprávu o stavu zvukového souboru",
           "default": "Zvukový soubor nelze vytvořit."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

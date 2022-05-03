@@ -328,10 +328,13 @@ export default class Recorder extends H5P.EventDispatcher {
       command: 'clear'
     });
 
-    this.stream.getAudioTracks().forEach(track => track.stop());
-    this.sourceNode.disconnect();
-    this.scriptProcessorNode.disconnect();
-    if (this.audioContext.state !== 'closed') {
+    if (this.stream) {
+      this.stream.getAudioTracks().forEach(track => track.stop());
+      this.sourceNode.disconnect();
+      this.scriptProcessorNode.disconnect();
+    }
+
+    if (this.audioContext && this.audioContext.state !== 'closed') {
       this.audioContext.close();
     }
 

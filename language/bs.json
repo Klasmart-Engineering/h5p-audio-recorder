@@ -83,6 +83,10 @@
         {
           "label": "Tekst poruke kada nije moguće snimiti poruku",
           "default": "Nije moguće kreirati audio fajl."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

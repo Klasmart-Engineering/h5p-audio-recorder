@@ -83,6 +83,10 @@
         {
           "label": "Kan nie klankgreep skep nie statusboodskap",
           "default": "Kan nie klankgreep skep nie."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }

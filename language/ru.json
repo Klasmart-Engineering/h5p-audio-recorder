@@ -83,6 +83,10 @@
         {
           "label": "Сообщение о невозможности создания записи",
           "default": "Невозможно создать файл записи."
+        },
+        {
+          "label": "Your recording has already been uploaded.",
+          "default": "Your recording has already been uploaded."
         }
       ]
     }
